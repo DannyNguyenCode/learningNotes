@@ -1,0 +1,53 @@
+thunk.js
+
+export const displayAlert = () =>{
+    alert("Hello");
+}
+
+dispatch a thunk similar to dispatch actions
+
+import {function} from './thunks';
+SIMILAR TO HOW WE SET UP ACTIONS
+
+import {loadInProgress, loadSuccess, loadFailure} from './actions';
+
+export const load = () => async(dispatch, getState) => {
+    try{
+        dispatch(loadInProgress());
+        const response = await fetch('url');
+        const stuff = await response.json();
+        dispatch(loadSuccess(stuff));
+    }catch(e){
+        dispatch(loadFailure());
+    }
+
+}
+
+
+
+
+actions.js
+
+export const LOAD_IN_PROGRESS = 'LOAD_IN_PROGRESS';
+export const loadInProgress = () =>({
+    type: LOAD_IN_PROGRESS,
+})
+
+
+export const LOAD_SUCCESS = 'LOAD_SUCCESS';
+export const loadSuccess = (text) => ({
+    type: LOAD_SUCCESS,
+    payload: text
+})
+
+export const LOAD_FAILURE = 'LOAD_FAILURE';
+export const loadFailure = ()=>({
+    type: LOAD_FAILURE,
+})
+
+changes to reducers
+    import {LOAD_IN_PROGRESS, LOAD_SUCCESS, LOAD_FAILURE} from './actions';
+    
+
+
+changes to redux store

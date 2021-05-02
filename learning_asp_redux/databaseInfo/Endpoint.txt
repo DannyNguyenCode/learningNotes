@@ -1,0 +1,33 @@
+Returning items
+
+- dependency inject data from context by creating a variable
+    - using Projects.Models
+    - in the constructor of each controller
+- create class in constructor to receive data from context
+    - private readonly Context _context;
+- add EnsureCreated to automatically check if database created
+
+using System.Collections.Generic;
+using Projects.Models
+using namespace Projects.Controller
+{
+    [Route("[controller]")]
+    [ApiController]
+
+    public class ProjectsController : ControllerBase
+    {
+        private readonly Context _context;
+        public ProjectsController(Context context)
+        {
+            _context = context;
+            _context.Database.EnsureCreated();
+
+        }
+        [HttpGet]
+        public IEnumerable<Technology> GetAllTechnologies()
+        {
+            return _context.Technologies.ToArray();
+        }
+    }
+}
+

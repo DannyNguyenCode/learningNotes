@@ -1,0 +1,49 @@
+take code in source and perform operations
+convert jsx and es6 into regular Javascript
+
+dev ops
+npm install --save-dev webpack webpack-cli
+webpack-dev-server
+style-loader css-loader babel-loader
+
+webpack config file
+webpack.config.js
+    const path = require('path');
+    const webpack = require('webpack');
+    module.exports = {
+        entry: './src/index.js',
+        mode: 'development',
+        module: {
+            rules: [
+                {
+                    test: /\.(js|jsx)$/
+                    exclude: /(node_modules)/,
+                    loader: 'babel-loader',
+                    options: {presets: ["@babel/env]}
+                },
+                {
+                    test: /\.css$/,
+                    use: ["style-loader","css-loader"]
+                }
+            ]
+        },
+        resolve: {extensioons: ['*', '.js', '.jsx']},
+        output: {
+            path: path.resolve(__dirname, 'dist/'),
+            publicPath: '/dist/',
+            filename: 'bundle.js'
+        },
+        devServer:{
+            contentBase: path.join(__dirname, 'public/'),
+            port:3000,
+            publicPath: 'http://localhost:3000/dist/',
+            hotOnly: true
+        },
+        plugins: [new webpack.HotModuleReplacementPlugin()]
+    }
+
+set up auto refresh
+npm install --save-dev react-hot-loader
+
+import {hot} from react-hot-loader;
+export default hot(module)(App);

@@ -1,0 +1,9 @@
+1) create App.js in src folder
+    - export default App
+2) index.js
+
+import React from "react"
+import ReactDOM from "react-dom"
+import App from './App.js';
+
+ReactDOM.render(<App/>), document.getElementById('root'));

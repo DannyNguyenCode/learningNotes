@@ -1,0 +1,22 @@
+redux store json object
+
+redux store current state of application
+
+redux actions
+    are json objects   
+        - action type === string
+        - payload of addtional data
+        - define different events that occur in application
+            - data loaded or item added to cart
+        - specifically define actions
+redux reducers
+    - what should happen to redux store when action occurs
+    - when user data loaded action occurs
+        - send user property to property store
+        - to user data in the actions payload
+components can only make changes to a state through calling an action
+
+    -> UI  trigger action
+    -> action gets reduced to updated state
+    -> components get readonly permission of new state
+

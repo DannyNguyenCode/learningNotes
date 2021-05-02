@@ -1,0 +1,75 @@
+CONTROLLER CLASS
+
+namespace Projects.Controllers
+{
+    [Route("[controller]")]
+    [ApiController]
+
+    public class ECommerce : ControllerBase
+    {
+        [HttpGet]
+        public string ECommerce()
+        {
+            return "OK.";
+        }
+    }
+}
+
+TECHNOLOGY CLASS / MODEL
+
+namespace Projects.Models
+{
+    public class Technology
+    {
+        public int Id {get; set;}
+        public string Name {get; set;}
+        public virtual List<Sector> Sectors {get;set;}
+    }
+}
+
+PROJECTCONTEXT FILE
+
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkcore;
+using Microsoft.EntityFrameworkcore.InMemory;
+namespace Projects.Models
+{
+    public class ProjectsContext : DbContext{
+        public class OnModelCreate(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Technology>().HasMany(t => t.Sectors);
+            modelBuilder.Entity<Sector>().HasOne(s => s.Technologies);
+            modelBuilder.Seed();
+        }
+    public DbContext<Technology> Technologies{get;set;}
+    public DbContext<Sector> Sectors {get;set;}
+    }
+}
+
+MODULECONTEXTEXTENSION FILE
+
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkcore;
+using Microsoft.EntityFrameworkcore.InMemory;
+
+namespace Projects.Model
+{
+    public static class ModelBuilder{
+        public class static void Seed(this ModelBuilder modelBuilder){
+            modelBuilder.Entity<Technology>().HasData(
+                new Technology {Id=1, Name="Bitcoin"}
+            )
+            modelBuilder.Entity<Sector>().HasData(
+                new Sector {Id=1, TechnolofyId=1, Name="Store of Value"}
+            )
+        }
+    }
+}
+
+
+STARTUP CLASS INCLUDE INTO SERVCES FUNCTION
+
+services.AddDbContext<ProjectContext>(options => option.UseInMemoryDatabase("Project"))
+
+
+

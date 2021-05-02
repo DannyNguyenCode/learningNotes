@@ -1,0 +1,156 @@
+- data model
+    - categories
+        - products
+    - C# model classes
+        - entity frameworkcore to create a database
+    - Create model folder
+        - find class template - prop tab tab will show on visual studio 2019
+        - steps to create a model
+            - create namespace
+                - namespace Projects.Models
+                - create class, same as C++
+                - create methods, same as C++
+                - products within a category
+                    - public virtual List<Product> Products {get; set;}
+                        - basically a vector in C++
+                        - virtual keyword allows child classes to modify to specific needs
+                            - similar to abstract interface classes in c++
+
+namespace Projects.Models
+{
+    public class Categories{
+        public int Id {get; set;}
+        public string Name {get; set;}
+        public virtual List<Product> Products{get; set;}
+
+    }
+}
+
+    - decimal for 2 precisions
+    - creating a variable by default comes with set and get
+        - public int Id {get; set;}
+        - creating a method --- coming soon
+    - access category where the products are in
+        - public virtual Category Category {get; set;}
+    - DateTime class used for date manipulations
+
+
+    namespace Projects.Models
+    {
+        public class Category
+        {
+            public int Id {get; set;}
+            public string Name {get; set;}
+            public virtual List<Product> Products{get; set;}
+        }
+    }
+
+Entity frameworkcore is used for sample data during development
+    - real life scenario
+        - empty database
+            - post to fill in database
+        - import database model
+            - vistual studio 2019
+                - Install-Package CsvHelper
+                    - package manager to read/write from file
+            - credit to https://github.com/dpaquette/SeedingDatabaseFromCSV
+
+protected override void Seed(SeedingDataFromCSV.Domain.LocationContext context)
+{
+    Assembly assembly = Assembly.GetExecutingAssembly();
+    string resourceName = "SeedingDataFromCSV.Domain.SeedData.countries.csv";
+    using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+    {
+        using (StreamReader reader = new StreamReader(stream, Encoding.UTF8))
+        {
+            CsvReader csvReader = new CsvReader(reader);
+            csvReader.Configuration.WillThrowOnMissingField = false;
+            var countries = csvReader.GetRecords<Country>().ToArray();
+            context.Countries.AddOrUpdate(c => c.Code, countries);
+        }
+    }
+
+    resourceName = "SeedingDataFromCSV.Domain.SeedData.provincestates.csv";
+    using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+    {
+        using (StreamReader reader = new StreamReader(stream, Encoding.UTF8))
+        {
+            CsvReader csvReader = new CsvReader(reader);
+            csvReader.Configuration.WillThrowOnMissingField = false;
+            while (csvReader.Read())
+            {
+                var provinceState = csvReader.GetRecord<ProvinceState>();
+                var countryCode = csvReader.GetField<string>("CountryCode");
+                provinceState.Country = context.Countries.Local.Single(c => c.Code == countryCode);
+                context.ProvinceStates.AddOrUpdate(p => p.Code, provinceState);
+            }
+        }
+    }
+}
+
+    - visual studio 2019
+        - Install-package Microsoft.EntityFrameworkcore
+        - Install-package Microsoft.EntityFrameworkcore.InMemory
+    - create context class in models folder
+        - wires up entity framework and model classes
+        - context/data
+            - derives from DbContext
+        - first - what kind of data types do we have in our models to be handled by frameworkcore
+        - public DbSet<Product> Products {get; set;}
+            - working with context, Context instance.Products to access all products
+- IN ORDER TO CREATE THE RELATIONSHIPS THERE MUST BE VIRTUAL LIST CONNECTING EACH class
+    - in the class Technology
+        - [JsonIgnore]
+        - public virtual List<Sector> Sectors {get;set;}
+    in the class Sector
+        - [JsonIgnore]
+        - public virtual List<Technology> Technologies {get;set;}
+
+
+namespace Projects.Models
+{
+    public class Context : DbContext {
+        protected override void OnModelCreating(ModelBuilder modelBuilder){
+            modelBuilder.Entity<Technology>().HasMany(t => t.Sectors);
+            modelBuilder.Entity<Sector>().HasOne(s => s.Technologies);
+            modelBuilder.Seed();
+        }
+
+        public DbSet<Technology> Technologies {get; set;}
+        public DbSet<Sector> Sectors {get;set;}
+    }
+}
+
+    - Seed method fills datastore with sample data
+    - within OnModelCreating method, can do relations between tables in database
+        - modelBuilder.Entity<Technology>().HasMany(t => t.Sectors)
+            - above is for foreginkey relationship
+        - modelBuilder.Entity<Sector>().HasOne(s => s.Technology);
+
+ModelBuilder class
+    - just used to override Seed method with sample data
+
+namespace Projects.Models
+{
+    public static class ModelBuilderExtensions
+    {
+        public static void Seed(this ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Technology>().HasData(
+                new Technology {Id=1, Name="Bitcoin"}
+                new Technology {Id=2, Name="Ethereum"}
+            )
+            modelBuilder.Entity<Sector>().HasData(
+                new Sector {Id=1, TechnologyId=1, Sector="Store of Value"}
+                new Sector {Id=2, TechnologyId=2, Sector="Decentralized Finance"}
+            )
+        }
+    }
+}
+
+startup class
+    - in start up add
+        - services.AddDbContext<NameContext>(options=>
+            options.UseInMemoryDatabase("Name")
+        )
+

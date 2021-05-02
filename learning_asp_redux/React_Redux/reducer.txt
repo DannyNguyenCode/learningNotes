@@ -1,0 +1,34 @@
+reducers.js
+
+keep track of state of states
+
+a function named after resource in redux store that it manages
+any action is fired, reducer gets called
+2 args are current state of resource that it manages
+and action that is triggered with type and payload
+should return updated state
+
+export const todos = (state, action)=>{
+    const {type, payload} = action;
+    switch(type){
+        case LOAD_TECHNOLOGY_SUCCESS:{
+            const {text} = payload;
+            const newTechnology = {
+                text,
+                isCompleted: false
+            };
+            return state.concat(newTechnology)
+        }
+        case LOAD_TECHNOLOGY_FAILURE:{
+            return state;
+        }
+        default:
+            return state;
+    }
+}
+
+add reducer to store.js
+import {LOAD_TECHNOLOGY_SUCCESS} from './reducer';
+const reducer = {
+    LOAD_TECHNOLOGY_SUCCESS,
+}

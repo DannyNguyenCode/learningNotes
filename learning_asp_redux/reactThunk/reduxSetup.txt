@@ -1,0 +1,22 @@
+side-effect libraries
+
+loading data / async operations
+
+component can dispatch an action or dipatch thunk
+    thunk dispatch action after performing function
+
+npm install redux-thunk redux-devtools-extension @babel/runtime
+npm install --save-dev @babel/plugin-transform-runtime
+
+store.js
+
+import thunk from 'redux-thunk';
+import {applyMiddleware} from 'redux';
+import {composeWithDevTools} from 'redux-devtools-extension';
+
+expost const configureStore = () =>{
+    createStore(
+        rootReducer,
+        composeWithDevTools(applyMiddleware(thunk)),
+    )
+}

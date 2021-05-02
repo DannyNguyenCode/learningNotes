@@ -1,0 +1,42 @@
+connect components to redux store
+
+import {connect} from 'react-redux';
+
+return a connected version of our components
+
+
+insread of export default component;
+
+const mapStateToProps = state => ({
+     todos: state.todos
+     //state.todos is fetching data from store and filling it into the todos prop defined in the argument component   
+});
+const mapDispatchToProps = dispatch=>({
+    onCreatePressed: text => dispatch(function(text));
+    //stores the action into prop onCreatePressed which is defined in argument of component
+
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(component)
+
+
+mapStateToProps     ----------      fills component prop from redux store state
+    the state arg is an object that represents entire redux state
+    representing different datas of application
+    job is to take state object and return another object contain pieces of that state that components need access to
+
+mapDispatchToProps      -----------     assigns action function from actions.js to component prop
+    properties of object will be passed to components as props
+    instead of taking state it is taking dispatch
+        triggers react action
+
+
+connect component to redux store
+
+import {connect} from 'react-redux';
+
+const mapStateToProps = state=>({});
+const mapDispatchToProps = dispatch =>({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(component);

@@ -1,0 +1,28 @@
+actions.js
+
+export const CREATE_TODO = 'CREATE_TODO';
+export const createTodo = (text) => {
+    type: CREATE_TODO,
+    payload: {text}
+}
+
+
+
+export const LOAD_TECHNOLOGY_SUCCESS = 'LOAD_TECHNOLOGY_SUCCESS';
+export const loadTechnologySuccess =(technology)=>{
+    type: 'LOAD_TECHNOLOGY_SUCCESS',
+    payload: {technology}
+}
+
+export const LOAD_TECHNOLOGY_FAILURE = 'LOAD_TECHNOLOGY_FAILURE';
+export const loadTechnologyFailure=()=>{
+    type: 'LOAD_TECHNOLOGY_FAILURE',
+    payload: {}
+}
+
+export const LOAD_TECHNOLOGY_PENDING = 'LOAD_TECHNOLOGY_PENDING';
+export const loadTechnologyPending = () =>{
+    type: 'LOAD_TECHNOLOGY_PENDING',
+    payload: {}
+}
+

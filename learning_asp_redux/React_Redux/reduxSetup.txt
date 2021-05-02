@@ -1,0 +1,21 @@
+npm install redux react-redux
+
+create new file inside src directory
+store.js
+
+import {createStore, combineReducer} from 'redux';
+
+const reducers = {};
+const rootReducer = combineReducer(reducers);
+export const configureStore = ()=> createStore(rootReducer,  composeWithDevTools(applyMiddleware(thunk)));
+
+
+redux provider!!
+
+index.js
+import {Provider} from 'react-redux';
+import {configureStore} from './store';
+
+<Provider store={configureStore()}>
+    <App/>
+</Provider>

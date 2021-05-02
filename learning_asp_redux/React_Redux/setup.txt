@@ -1,0 +1,27 @@
+1) npm init -y
+    - initialize npm package
+    - create package.json
+    - git init
+        - creates git repository
+
+2) create public
+    - index.html
+        - sent to client when request is sent from client
+<!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="utf-8"></meta>
+            <meta name="viewport" content="width=device-width", initial-scale="1", shrink-to-fit="no""></meta>
+            <title></title>           
+        </head>
+        <body>
+            <div id="root"></div>
+            <noscript>Please enable Javascript</noscript>
+            <script src="../dist/bundle.js></script>
+        </body>
+    </html>
+3) create src
+4) writing in es6 syntax and support for jsx for designing page apps
+
+5) dev ops
+    

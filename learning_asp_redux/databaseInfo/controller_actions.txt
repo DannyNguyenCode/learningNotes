@@ -1,0 +1,59 @@
+- base class
+    - ControllerBase
+    - classes inherit from base class
+    - [ApiController] class attribute
+        - gives class features
+        - within the controller public action method
+            - mapped to specific http request
+    - [HttpGet]/Get()
+        - attribute to provide HTTP verb
+- add controller
+    - scaffolded items
+        - api controller - Empty
+            - Products (name)
+
+namespace Projects.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+
+    public class ProductsController : ControllerBase{
+        [HttpGet]
+        public void GetProducts(){}
+    }
+
+}
+
+- missing is routing
+    - api contreoller attribute
+        - gives features
+        - removes previous features from versions
+        - automated mapping from URI to actual method
+            - no longer works
+        - provide hints to network for how routing takes place
+   - can use the attribute on the class and spicific methods
+   - attribute is Route
+        - [Route("/products")]
+        - [Route("/products/{id}")]
+            - id will be put from variable
+        - [Route("/products/{id?}")]
+        - [Route("/[controller]")]
+            -dynamically take name from controller into the URI
+
+- CONTROLLER FILE
+namespace Projects.Controllers
+{
+    [Route("[controller]")]
+    [ApiController]
+
+    public class ProductsController : ControllerBase{
+        [HttpGet]
+        public string GetProducts(){
+            return "OK.";
+        }
+    }
+}
+
+
+
+

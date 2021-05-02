@@ -1,0 +1,85 @@
+Linux
+    download asp.net core website
+    - scroll down to distribution and version
+    - for more information
+    - scroll down to versions and follow set up
+Windows
+    - asp net core windows installer
+        - powershell
+        - mannually install
+
+visual studio 2019
+- create new project
+- ASP.net core web application template
+    - create web api
+    - sub template
+        - API
+            - NET core is selected
+- dependencies
+- weatherforecast.css
+    - is a class
+- controller
+    - get method
+    - get method creates random entries
+    - trust ssl certificate - select no
+        - this creates a warning
+            - we talking to localhost so it doesnt matter
+            - self sign certificate is the warning
+
+
+
+visual studio code
+- no project template
+- view -> terminal -> powershell
+- command prompt
+   - create folder to hold project
+   - dotnet new webapi (template to use) -o WebApplication1 (name)
+   - cd to folder
+       - folder is the project
+   - popup assets yes
+       - .vscode folder contains for visual studio code
+- runs on https
+
+
+HTTP
+    - protocol
+    - text based
+    - state less
+        - cant remember anything
+    - http verbs
+    - status codes
+    - header fields
+
+REST
+    - design concept - programming paradigm
+    - uses existing infrastructure
+    - built ontop of http
+    - using URIs
+        - provides access to resources
+            - format and what to do with resources
+                - comes from http
+    - contraints
+        - uniform interface
+            - have one URI per resource
+        - client-server
+            - independent from eachother
+        - stateless
+            - http is stateless, api should be stateless
+        - cacheable
+        - layered system architecture
+        - code on demand
+            - return data you can also return code that can then be executed by client
+                - can return javascript code then browser executes code
+API design
+    - Nouns not verbs for URI
+    - http get retrieve information
+        - https://api.hplussport.com/products
+            - get all
+        - https://api.hplussport.com/products/123
+            - get specific product
+        - https://api.hplussport.com/products/123/variants/
+            - get sub property of products
+        - https://api.hplussport.com/products/123/variants/456
+            - get specific product with the sub property that matches id 456
+        
+        
